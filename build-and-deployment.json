@@ -1,0 +1,17 @@
+{
+  "productionBuild": "passed",
+  "typescript": "passed",
+  "sourceHelpersOutsideFunctions": true,
+  "frontendEndpoint": "/.netlify/functions/game",
+  "netlifyDropMultiplayerSupported": false,
+  "liveDeploymentVerified": false,
+  "sourceArchiveExclusions": [
+    "node_modules",
+    "caches",
+    "logs",
+    ".git",
+    "local databases"
+  ],
+  "designPreserved": true,
+  "defaultRounds": 9
+}

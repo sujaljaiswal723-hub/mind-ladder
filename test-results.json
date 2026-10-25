@@ -1,0 +1,26 @@
+[
+  {
+    "test": "Complete 3-round two-player game",
+    "passed": true,
+    "scores": {
+      "Alice": 250,
+      "Bob": 200
+    },
+    "winner": "Alice",
+    "conditionalConflictsRetried": 3
+  },
+  {
+    "test": "Complete 9-round two-player game",
+    "passed": true,
+    "scores": {
+      "Alice": 1750,
+      "Bob": 1700
+    },
+    "winner": "Alice",
+    "conditionalConflictsRetried": 9
+  },
+  {
+    "test": "Direct function URL, strong consistency, no routing overrides or server secrets in frontend",
+    "passed": true
+  }
+]

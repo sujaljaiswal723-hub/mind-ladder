@@ -1,0 +1,28 @@
+[
+  {
+    "bootstrapVersion": "2.24.0",
+    "bundler": "none",
+    "bundlerReason": "none-override",
+    "config": {
+      "nodeBundler": "none"
+    },
+    "entryFilename": "___netlify-entry-point.mjs",
+    "includedFiles": [],
+    "invocationMode": "stream",
+    "outputModuleFormat": "esm",
+    "path": "artifacts/functions/game.zip",
+    "priority": 10,
+    "runtimeVersion": "nodejs24.x",
+    "name": "game",
+    "runtime": "js",
+    "size": 351592,
+    "routes": [],
+    "excludedRoutes": [],
+    "runtimeAPIVersion": 2,
+    "buildData": {
+      "bootstrapVersion": "2.24.0",
+      "runtimeAPIVersion": 2
+    },
+    "source": "netlify/functions/game.ts"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "packager": "@netlify/zip-it-and-ship-it",
+  "runtimeAPIVersion": 2,
+  "packagedHandlerExecuted": true,
+  "storage": "Real @netlify/blobs SDK against an in-memory HTTP contract emulator (not a live Netlify deployment)",
+  "rounds": 9,
+  "players": 2,
+  "scores": {
+    "Alice": 1750,
+    "Bob": 1700
+  },
+  "winner": "Alice",
+  "strongConsistencyRequests": 79,
+  "conditionalConflictsRetried": 9
+}

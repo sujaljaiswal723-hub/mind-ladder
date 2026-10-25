@@ -1,0 +1,23 @@
+import JSZip from 'jszip';
+import {readFile,writeFile,readdir,mkdir} from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+await mkdir('verification',{recursive:true});
+for(const name of ['test-results.json','packaged-function-results.json'])await writeFile(path.join('verification',name),await readFile(path.join('artifacts',name)));
+const report={productionBuild:'passed',typescript:'passed',sourceHelpersOutsideFunctions:true,frontendEndpoint:'/.netlify/functions/game',netlifyDropMultiplayerSupported:false,liveDeploymentVerified:false,sourceArchiveExclusions:['node_modules','caches','logs','.git','local databases'],designPreserved:true,defaultRounds:9};
+await writeFile('verification/build-and-deployment.json',JSON.stringify(report,null,2));
+const zip=new JSZip();
+async function add(folder,prefix=''){for(const entry of await readdir(folder,{withFileTypes:true})){const rel=prefix+entry.name;if(['node_modules','.git','.netlify','.local','.cache'].includes(entry.name)||entry.name.endsWith('.log'))continue;if(entry.isDirectory())await add(path.join(folder,entry.name),rel+'/');else zip.file(rel,await readFile(path.join(folder,entry.name)));}}
+for(const name of ['src','server','netlify','scripts','dist','verification'])await add(name,name+'/');
+for(const name of ['package.json','pnpm-lock.yaml','pnpm-workspace.yaml','netlify.toml','tsconfig.json','README.md','.gitignore'])zip.file(name,await readFile(name));
+zip.file('artifacts/functions/game.zip',await readFile('artifacts/functions/game.zip'));
+const manifest=JSON.parse(await readFile('artifacts/function-manifest.json','utf8')).map(({inputs,mainFile,...entry})=>({...entry,path:'artifacts/functions/game.zip',source:'netlify/functions/game.ts'}));
+zip.file('artifacts/function-manifest.json',JSON.stringify(manifest,null,2));
+const target=path.resolve('../../outputs/netlify-ready-game.zip');await mkdir(path.dirname(target),{recursive:true});await writeFile(target,await zip.generateAsync({type:'nodebuffer',compression:'DEFLATE'}));
+const check=await JSZip.loadAsync(await readFile(target));
+for(const name of ['netlify.toml','package.json','pnpm-lock.yaml','src/Game.tsx','netlify/functions/game.ts','server/game.ts','dist/index.html','dist/assets/game.js','artifacts/functions/game.zip'])assert(check.file(name),'Missing archive entry '+name);
+assert(!Object.keys(check.files).some(n=>/node_modules|\.log$|\.sqlite$|\.cache/.test(n)));
+assert.deepEqual(Object.keys(check.files).filter(n=>n.startsWith('netlify/functions/')&&!n.endsWith('/')),['netlify/functions/game.ts']);
+const endpoint=await check.file('src/Game.tsx').async('string');assert(!endpoint.includes('/api/game'));assert(endpoint.includes('/.netlify/functions/game'));
+console.log('Archive verified:',target,'('+Object.keys(check.files).length+' entries)');
+
