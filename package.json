@@ -1,0 +1,29 @@
+{
+  "name": "mind-ladder-netlify",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "package:function": "node scripts/package-function.mjs",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@netlify/blobs": "11.1.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@netlify/functions": "6.0.3",
+    "@netlify/zip-it-and-ship-it": "16.5.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "esbuild-wasm": "0.28.2",
+    "jszip": "3.10.1",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "pnpm@11.25.0"
+}
