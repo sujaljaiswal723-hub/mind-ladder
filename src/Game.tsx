@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useState} from 'react';
+import React, {useEffect,useState} from 'react';
 export default function Home(){
 const [theme,setTheme]=useState('light');
 useEffect(()=>{const saved=localStorage.getItem('ml-theme');const initial=saved==='dark'||saved==='light'?saved:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');setTheme(initial);document.documentElement.dataset.theme=initial;},[]);
